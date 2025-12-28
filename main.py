@@ -1,4 +1,4 @@
-from sys import platform
+import platform 
 from langgraph.graph import StateGraph , START , END
 from langchain_google_genai import ChatGoogleGenerativeAI
 from dotenv import load_dotenv
@@ -127,7 +127,7 @@ def ContextRiskAdjustmentNode(state : State):
     cmds = state.commands
     if final_risk  =="CRITICAL":
         return {
-            'context_risk' : final_risk
+            'final_risk' : final_risk
         }
     step = 0
 
@@ -163,8 +163,6 @@ def LLMExplanationNode(state : State):
     
     llm_explain = llm.with_structured_output(explain)
 
-
-
     chain = prompt | llm_explain
     result = chain.invoke({
         "commands" : commands,
@@ -176,15 +174,20 @@ def LLMExplanationNode(state : State):
     })
     print(result)
     return {
-        "decision" : result['decision'],
-        "explanation" : result['explanation'],
-        "consequences" : result['consequences'],
-        "safer_alternative" : result['safer_alternative']
+        "decision" : result.decision,
+        "explanation" : result.explanation,
+        "consequences" : result.consequences,
+        "safer_alternative" : result.safer_alternative
     }
 
 
 def DecisionNode(state : State):
-    pass
+    final_risk = state.final_risk
+    return {
+        "decision" : final_risk
+    }
+ 
+
 
 
 graph = StateGraph(State)
@@ -216,5 +219,6 @@ result = workflow.invoke({
     
 })
 
-print(result['normalized_command'])
-print(result['commands'])
+print(result)
+with open("final_result.json", "w") as f:
+    json.dump(result, f, indent=4)  
