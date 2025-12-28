@@ -11,6 +11,7 @@ from Schema_class import *
 from list_of_cmds import * 
 from prompt import * 
 from helper_function import * 
+from initialize_llm import * 
 
 def NormalizeCommandNode(state: State):
     raw_cmd = state.raw_command
@@ -153,7 +154,33 @@ def risk_branch(state: State):
         return "DecisionNode"
 
 def LLMExplanationNode(state : State):
-    pass
+    commands = state.commands
+    is_root_dir = state.is_root_dir
+    is_root_user = state.is_root_user
+    cwd = state.cwd
+    rule_risk = state.rule_risk
+    final_rist = state.final_risk
+    
+    llm_explain = llm.with_structured_output(explain)
+
+
+
+    chain = prompt | llm_explain
+    result = chain.invoke({
+        "commands" : commands,
+        'rule_risk' : rule_risk,
+        "final_risk" : final_rist,
+        "cwd": cwd,
+          "is_root_user":is_root_user,
+        "is_root_dir" : is_root_dir
+    })
+    print(result)
+    return {
+        "decision" : result['decision'],
+        "explanation" : result['explanation'],
+        "consequences" : result['consequences'],
+        "safer_alternative" : result['safer_alternative']
+    }
 
 
 def DecisionNode(state : State):
