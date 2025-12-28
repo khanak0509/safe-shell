@@ -176,6 +176,9 @@ def LLMExplanationNode(state : State):
     return {
         "decision" : result.decision,
         "explanation" : result.explanation,
+        "safe_commands" : result.safe_commands,
+        "unsafe_commands" : result.unsafe_commands,
+        "general_guidance" : result.general_guidance,
         "consequences" : result.consequences,
         "safer_alternative" : result.safer_alternative
     }
