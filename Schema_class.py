@@ -13,7 +13,14 @@ class State(BaseModel):
     final_risk: str = "NONE"
     decision: str = ""
     explanation: str = ""
-    precautions: str = ""
+    consequences: str = ""
     safer_alternative: str = ""
+
+
+class explain(BaseModel):
+    explanation: str
+    safer_alternative :str = None
+    consequences : str = None
+    decision: Literal["BLOCK","WARN","ALLOW"]
 
 
