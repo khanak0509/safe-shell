@@ -10,7 +10,6 @@ class State(BaseModel):
     is_root_user: bool = False
     os_type: str = ""
     rule_risk: Literal["NONE" , "LOW" , "MEDIUM" , "HIGH" , "CRITICAL"] = "NONE"
-    context_risk: Literal["NONE" , "LOW" , "MEDIUM" , "HIGH" , "CRITICAL"] = "NONE"
     final_risk: str = "NONE"
     decision: str = ""
     explanation: str = ""
