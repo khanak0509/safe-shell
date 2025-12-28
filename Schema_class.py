@@ -15,10 +15,16 @@ class State(BaseModel):
     explanation: str = ""
     consequences: str = ""
     safer_alternative: str = ""
+    safe_commands  : List[str] = []
+    unsafe_commands: List[str] = []
+    general_guidance: str = ""
 
 
 class explain(BaseModel):
     explanation: str
+    safe_commands: List[str] = []
+    unsafe_commands: List[str] = []
+    general_guidance: str = ""
     safer_alternative :str = None
     consequences : str = None
     decision: Literal["BLOCK","WARN","ALLOW"]
