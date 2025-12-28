@@ -15,16 +15,24 @@ Is root user: {is_root_user}
 Is root directory: {is_root_dir}
 
 Instructions:
-- Explain in clear, concise language why the command(s) are considered risky or safe.
-- If risky, describe the potential consequences and suggest specific precautions.
+- Analyze the provided list of commands.
+- Categorize each command into "Safe" or "Unsafe".
+- "Safe" commands are those that do not pose a significant risk to the system (e.g., echo, ls, mkdir).
+- "Unsafe" commands are those that could cause data loss, system instability, or security breaches (e.g., rm -rf /, chmod 777).
+- Provide a "General guidance" summary that is EXTREMELY concise (max 1 sentence).
+- Explain in very short, concise language why the risky commands are dangerous (max 1 sentence).
+- If risky, describe potential consequences in 3-5 words.
 - If possible, suggest a safer alternative command.
-- End with a clear decision: BLOCK (if the command should not be run), WARN (if the user should be warned), or ALLOW (if the command is safe).
+- End with a clear decision: BLOCK (if any command is unsafe), WARN (if risky but potentially valid), or ALLOW (if all are safe).
 
-Format your response as follows:
-Explanation: <your explanation>
-Potential consequences: <if any> otherwirse return none 
-Safer alternative: <if any> if exist otherwise none 
-Decision: <BLOCK/WARN/ALLOW> 
+Format your response as follows (JSON compatible):
+Explanation: <max 1 sentence>
+Safe commands: <list of safe commands>
+Unsafe commands: <list of unsafe commands>
+General guidance: <max 1 sentence>
+Potential consequences: <max 5 words> otherwise return none
+Safer alternative: <if any> if exist otherwise none
+Decision: <BLOCK/WARN/ALLOW>
 """
 
 )
