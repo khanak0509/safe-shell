@@ -10,6 +10,7 @@ from numpy import empty
 from Schema_class import * 
 from list_of_cmds import * 
 from prompt import * 
+from helper_function import * 
 
 def NormalizeCommandNode(state: State):
     raw_cmd = state.raw_command
@@ -118,11 +119,35 @@ def RuleBasedRiskNode(state: State):
 
 
 def ContextRiskAdjustmentNode(state : State):
-    pass
+    rule_risk = state.rule_risk
+    final_risk = rule_risk 
+    is_root_dir = state.is_root_dir
+    is_root_user = state.is_root_user
+    cmds = state.commands
+    if final_risk  =="CRITICAL":
+        return {
+            'context_risk' : final_risk
+        }
+    step = 0
+
+    if is_root_dir and rule_risk in ("MEDIUM", "HIGH"):
+        steps += 1
+    if is_root_user and rule_risk in ("MEDIUM", "HIGH"):
+        steps += 1
+    for cmd in cmds:
+        if "rm -rf" in cmd.lower():
+            for d in SENSITIVE_DIRS:
+                if state.cwd.startswith(d):
+                    steps += 1
+                    break
+    final_risk = escalate_risk(rule_risk, steps)
+    return {"final_risk": final_risk}
+
+
 
 def risk_branch(state: State):
-    risk = state.final_risk or state.context_risk or state.rule_risk
-    if risk in ["MEDIUM", "HIGH", "CRITICAL"]:
+    final_risk = state.final_risk
+    if final_risk in ["MEDIUM", "HIGH", "CRITICAL"]:
         return "LLMExplanationNode"
     else:
         return "DecisionNode"
