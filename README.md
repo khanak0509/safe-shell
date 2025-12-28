@@ -4,20 +4,20 @@
 
 ## ⚡ Setup
 
-1.  **Install Dependencies**
-    ```bash
-    pip install -r requirements.txt
-    ```
-2.  **Configure Environment**
-    Create a `.env` file with your Gemini API key:
-    ```env
-    GOOGLE_API_KEY=your_api_key_here
-    ```
-3.  **Activate**
-    Source the integration script (add to `~/.zshrc` for persistence):
-    ```zsh
-    source safe_shell.sh
-    ```
+1. **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+2. **Configure Environment**
+   Create a `.env` file with your Gemini API key:
+   ```env
+   GOOGLE_API_KEY=your_api_key_here
+   ```
+3. **Activate**
+   Source the integration script (add to `~/.zshrc` for persistence):
+   ```zsh
+   source safe_shell.sh
+   ```
 
 ## 🚀 Usage
 
@@ -33,7 +33,7 @@ Just use your terminal as normal. Safe Shell runs silently in the background.
   ```
 - **Dangerous Commands**: Blocked by default.
   ```bash
-  rm -rf /      # 🚫 BLOCKED (Can be forced with 'y')
+  rm -rf /      # 🚫 BLOCK 
   ```
 
 ## 🧠 Workflow
