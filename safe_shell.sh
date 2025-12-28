@@ -33,9 +33,11 @@ function _safe_shell_accept_line() {
 import sys, json
 try:
     data = json.load(sys.stdin)
-    print(f\"{data.get('decision', '')}|{data.get('explanation', '')}|{data.get('general_guidance', '')}|{data.get('consequences', '')}\")
+    # Extract final_risk from the state (top level) along with decision etc.
+    final_risk = data.get('final_risk', 'UNKNOWN')
+    print(f\"{data.get('decision', '')}|{data.get('explanation', '')}|{data.get('general_guidance', '')}|{data.get('consequences', '')}|{final_risk}\")
 except Exception:
-    print('|||')
+    print('||||')
 ")
 
     local decision="${parsed_values%%|*}"
@@ -43,7 +45,9 @@ except Exception:
     local explanation="${remainder%%|*}"
     local remainder="${remainder#*|}"
     local guidance="${remainder%%|*}"
-    local consequences="${remainder#*|}"
+    local remainder="${remainder#*|}"
+    local consequences="${remainder%%|*}"
+    local final_risk="${remainder#*|}"
 
     local RED='\033[0;31m'
     local GREEN='\033[0;32m'
@@ -52,7 +56,7 @@ except Exception:
     local BOLD='\033[1m'
 
     if [[ "$decision" == "BLOCK" || "$decision" == "CRITICAL" ]]; then
-        echo "${RED}${BOLD}🚫 DANGER (${decision})${NC}"
+        echo "${RED}${BOLD}🚫 DANGER (${final_risk})${NC}"
         echo "${RED}$explanation${NC}"
         echo -n "${RED}${BOLD}Force Execute? [y/N] ${NC}"
         
@@ -68,7 +72,7 @@ except Exception:
     fi
 
     if [[ "$decision" == "WARN" || "$decision" == "HIGH" || "$decision" == "MEDIUM" ]]; then
-        echo "${YELLOW}${BOLD}⚠️  WARNING (${decision})${NC}"
+        echo "${YELLOW}${BOLD}⚠️  WARNING (${final_risk})${NC}"
         echo "${YELLOW}$explanation${NC}"
         if [[ -n "$consequences" ]]; then
             echo "${YELLOW}Consequences: $consequences${NC}"
