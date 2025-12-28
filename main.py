@@ -172,18 +172,15 @@ graph.add_node("DecisionNode", DecisionNode)
 graph.add_edge(START, "NormalizeCommandNode")
 graph.add_edge("NormalizeCommandNode", "CollectContextNode")
 graph.add_edge("CollectContextNode", "RuleBasedRiskNode")
-graph.add_edge("RuleBasedRiskNode", END)
+graph.add_edge("RuleBasedRiskNode", "ContextRiskAdjustmentNode")
 
+graph.add_conditional_edges(
+    "ContextRiskAdjustmentNode",
+    risk_branch
+)
 
-
-# graph.add_conditional_edges(
-#     "ContextRiskAdjustmentNode",
-#     risk_branch,
-#     {"LLMExplanationNode": "LLMExplanationNode", "DecisionNode": "DecisionNode"}
-# )
-
-# graph.add_edge("LLMExplanationNode", "DecisionNode")
-# graph.add_edge("DecisionNode", END)
+graph.add_edge("LLMExplanationNode", "DecisionNode")
+graph.add_edge("DecisionNode", END)
 
 workflow = graph.compile()
 
