@@ -129,7 +129,7 @@ def ContextRiskAdjustmentNode(state : State):
         return {
             'final_risk' : final_risk
         }
-    step = 0
+    steps = 0
 
     if is_root_dir and rule_risk in ("MEDIUM", "HIGH"):
         steps += 1
@@ -147,6 +147,7 @@ def ContextRiskAdjustmentNode(state : State):
 
 
 def risk_branch(state: State):
+    final_risk = state.final_risk
     final_risk = state.final_risk
     if final_risk in ["MEDIUM", "HIGH", "CRITICAL"]:
         return "LLMExplanationNode"
@@ -172,7 +173,6 @@ def LLMExplanationNode(state : State):
           "is_root_user":is_root_user,
         "is_root_dir" : is_root_dir
     })
-    print(result)
     return {
         "decision" : result.decision,
         "explanation" : result.explanation,
@@ -187,7 +187,13 @@ def LLMExplanationNode(state : State):
 def DecisionNode(state : State):
     final_risk = state.final_risk
     return {
-        "decision" : final_risk
+        "decision" : final_risk,
+        "explanation": "",
+        "consequences": "",
+        "safer_alternative": "",
+        "safe_commands": [],
+        "unsafe_commands": [],
+        "general_guidance": ""
     }
  
 
@@ -212,16 +218,28 @@ graph.add_conditional_edges(
     risk_branch
 )
 
-graph.add_edge("LLMExplanationNode", "DecisionNode")
+graph.add_edge("LLMExplanationNode", END)
 graph.add_edge("DecisionNode", END)
 
 workflow = graph.compile()
 
-result = workflow.invoke({
-    "raw_command": "rm -rf / ; echo 'This is a test' && ls -la || mkdir new_folder",
-    
-})
+import sys
 
-print(result)
-with open("final_result.json", "w") as f:
+# ... (imports)
+
+# ... (graph definition)
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        command_to_check = " ".join(sys.argv[1:])
+    else:
+        command_to_check = "rm -rf / ; echo 'This is a test' && ls -la || mkdir new_folder"
+
+    result = workflow.invoke({
+        "raw_command": command_to_check,
+    })
+
+print(json.dumps(result))
+output_path = os.path.join(os.path.dirname(__file__), "final_result.json")
+with open(output_path, "w") as f:
     json.dump(result, f, indent=4)  
