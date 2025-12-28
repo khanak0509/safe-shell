@@ -6,6 +6,8 @@ import re
 import json 
 import os 
 import time 
+import sys
+
 from numpy import empty
 from Schema_class import * 
 from list_of_cmds import * 
@@ -223,11 +225,6 @@ graph.add_edge("DecisionNode", END)
 
 workflow = graph.compile()
 
-import sys
-
-# ... (imports)
-
-# ... (graph definition)
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
