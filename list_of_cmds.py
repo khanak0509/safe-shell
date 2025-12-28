@@ -21,13 +21,14 @@ MEDIUM_PATTERNS = [
     r"\bsudo\b",
     r"\bssh\b",
     r"\bscp\b",
+    r"pip\s+install",
+    r"npm\s+install",
+    r"yarn\s+add",
+
 ]
 
 LOW_PATTERNS = [
-    r"pip\s+install",
     r"pipx\s+install",
-    r"npm\s+install",
-    r"yarn\s+add",
     r"brew\s+install",
     r"apt(-get)?\s+install",
 ]
