@@ -8,6 +8,8 @@ import os
 import time 
 from numpy import empty
 from Schema_class import * 
+from list_of_cmds import * 
+from prompt import * 
 
 def NormalizeCommandNode(state: State):
     raw_cmd = state.raw_command
@@ -89,8 +91,30 @@ def CollectContextNode(state : State):
 
     
 
-def RuleBasedRiskNode(state : State):
-    pass
+def RuleBasedRiskNode(state: State):
+    max_risk = "NONE"
+
+    for cmd in state.commands:
+        c = cmd.lower()
+
+        for pattern in CRITICAL_PATTERNS:
+            if re.search(pattern, c):
+                return {"rule_risk": "CRITICAL"}
+
+        for pattern in HIGH_PATTERNS:
+            if re.search(pattern, c):
+                max_risk = "HIGH"
+
+        for pattern in MEDIUM_PATTERNS:
+            if re.search(pattern, c) and max_risk not in ("HIGH",):
+                max_risk = "MEDIUM"
+
+        for pattern in LOW_PATTERNS:
+            if re.search(pattern, c) and max_risk == "NONE":
+                max_risk = "LOW"
+
+    return {"rule_risk": max_risk}
+
 
 
 def ContextRiskAdjustmentNode(state : State):
