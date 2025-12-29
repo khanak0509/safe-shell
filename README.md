@@ -1,12 +1,12 @@
-# Safe Shell
+#  Safe Shell
 
 **AI-powered safety layer for your terminal.** Intercepts commands, analyzes risk, and blocks dangerous actions before they run.
 
 ## 🎥 Demo
 
-[![Watch the demo](https://img.youtube.com/vi/placeholder/0.jpg)](Timeline%201.mov)
+[![Watch the demo](https://img.youtube.com/vi/placeholder/0.jpg)](https://drive.google.com/file/d/11q7pcAQ3gJJUWJaf1HvD5XK5PL_A9NRz/view?usp=sharing)
 
-> **Note:** Click the image or [here](Timeline%201.mov) to watch the local demo video `Timeline 1.mov`.
+> **Note:** Click the image or [here](https://drive.google.com/file/d/11q7pcAQ3gJJUWJaf1HvD5XK5PL_A9NRz/view?usp=sharing) to watch the demo video.
 
 ## ⚡ Setup
 
