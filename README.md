@@ -2,6 +2,12 @@
 
 **AI-powered safety layer for your terminal.** Intercepts commands, analyzes risk, and blocks dangerous actions before they run.
 
+## 🎥 Demo
+
+[![Watch the demo](https://img.youtube.com/vi/placeholder/0.jpg)](Timeline%201.mov)
+
+> **Note:** Click the image or [here](Timeline%201.mov) to watch the local demo video `Timeline 1.mov`.
+
 ## ⚡ Setup
 
 1. **Install Dependencies**
@@ -33,7 +39,7 @@ Just use your terminal as normal. Safe Shell runs silently in the background.
   ```
 - **Dangerous Commands**: Blocked by default.
   ```bash
-  rm -rf /      # 🚫 BLOCK 
+  rm -rf /      # 🚫 BLOCK
   ```
 
 ## 🧠 Workflow
