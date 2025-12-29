@@ -6,7 +6,7 @@
 
 [![Watch the demo](demo.gif)](https://drive.google.com/file/d/11q7pcAQ3gJJUWJaf1HvD5XK5PL_A9NRz/view?usp=sharing)
 
-> **Note:** Click the image or [here](https://drive.google.com/file/d/11q7pcAQ3gJJUWJaf1HvD5XK5PL_A9NRz/view?usp=sharing) to watch the high-quality demo video.
+> **Note:** Click the image or [here](https://drive.google.com/file/d/11q7pcAQ3gJJUWJaf1HvD5XK5PL_A9NRz/view?usp=sharing) to watch the demo video.
 
 ## ⚡ Setup
 
